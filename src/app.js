@@ -52,18 +52,28 @@ ajax(
 	function(data) {	
 		// Create an array of Menu items
 		var menuItems = parseFeed(data, 10);
-		
+
 		// Construct Menu to show to user
 		var resultsMenu = new UI.Menu({
 			sections: [{
-				title: 'Nearest lalala',
+				title: 'Nearest anchors',
 				items: menuItems
 			}]
 		});
 
 		// Add an action for SELECT
 		resultsMenu.on('select', function(e) {
-			console.log('Item number ' + e.item + ' was pressed!');
+
+			// Assemble body string
+			var content = data.features[e.itemIndex].properties.name;
+
+			// Create the Card for detailed view
+			var detailCard = new UI.Card({
+				title:'Details',
+				subtitle:e.item.subtitle,
+				body: content
+			});
+			detailCard.show();
 		});
 
 		// Show the Menu, hide the splash
