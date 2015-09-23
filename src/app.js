@@ -46,12 +46,12 @@ splashWindow.show();
 // Make the request
 ajax(
 	{
-		url: 'http://hiulit.com/bcn-bike-anchors/js/anchors.json',
+		url: 'http://hiulit.com/bcn-bike-anchors/js/json/anchors2.json',
 		type: 'json'
 	},
 	function(data) {	
 		// Create an array of Menu items
-		var menuItems = parseFeed(data, 10);
+		var menuItems = parseFeed(data, 100);
 
 		// Construct Menu to show to user
 		var resultsMenu = new UI.Menu({
@@ -83,5 +83,23 @@ ajax(
 	function(error) {
 		// Failure!
 		console.log('Failed fetching data: ' + error);
+		// Show splash screen while waiting for data
+		var splashWindow = new UI.Window();
+
+		// Text element to inform user
+		var text = new UI.Text({
+			position: new Vector2(0, 0),
+			size: new Vector2(144, 168),
+			text:'Failed fetching data :(',
+			font:'GOTHIC_28_BOLD',
+			color:'black',
+			textOverflow:'wrap',
+			textAlign:'center',
+			backgroundColor:'white'
+		});
+
+		// Add to splashWindow and show
+		splashWindow.add(text);
+		splashWindow.show();
 	}
 );
