@@ -4,22 +4,17 @@ var Vector2 = require('vector2');
 
 var parseFeed = function(data, quantity) {
 	var items = [];
+	
 	for(var i = 0; i < quantity; i++) {
-		// Always upper case the description string
-		var title = data.features[i].properties.address;
-		//title = title.charAt(0).toUpperCase() + title.substring(1);
-
-		// Get date/time substring
-		var time = data.features[i].properties.district;
-		//time = time.substring(time.indexOf('-') + 1, time.indexOf(':') + 3);
-
+		var address = data.features[i].properties.address;
+		var district = data.features[i].properties.district;
 		// Add to menu items array
 		items.push({
-			title:title,
-			subtitle:time
+			title: address,
+			subtitle: district
 		});
 	}
-
+	
 	// Finally return whole array
 	return items;
 };
@@ -83,7 +78,7 @@ ajax(
 	function(error) {
 		// Failure!
 		console.log('Failed fetching data: ' + error);
-		// Show splash screen while waiting for data
+		// Show splash screen when failure
 		var splashWindow = new UI.Window();
 
 		// Text element to inform user
